@@ -22,20 +22,12 @@ int main(){
     cin.tie(NULL); cout.tie(NULL);
 
     ll N, ans=0; cin>>N;
-    vll cube, squre;
-    // 100000000000^(1/3) = 4641.58883
-    for(ll a=0; a<=4641; a++){
-        cube.emplace_back(a*a*a);
-    }
-    // 100000000000^(1/2) = 316227.166
-    for(ll a=0; a<=316227; a++){
-        squre.emplace_back(a*a);
-    }
-    ll n3 = upper_bound(all(cube), N)-cube.begin()-1;
-    for(ll a=1; a<=n3; a++){
-        ll n2 = upper_bound(all(squre), N/a)-squre.begin()-1;
-        for(ll b=a; b<=n2; b++){
-            ans+=N/(a*b)-b+1;
+    
+    // In this problem, the risk of overflow of a*a*a
+    // can be ignored due to the constraint
+    for(ll a=1; a*a*a<=N; a++){
+        for(ll b=a; a*b*b<=N; b++){
+            ans += N/(a*b)-b+1;
         }
     }
 
