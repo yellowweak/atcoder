@@ -34,8 +34,9 @@ int main(){
         vp.emplace_back(make_pair(l,r));
     }
     sort(all(vp), [](pii &pa, pii &pb){
-        if(pa.first==pb.first)  return pa.second<pb.second;
-        return pa.first<pb.first;
+        // if(pa.first==pb.first)  return pa.second<pb.second;
+        // return pa.first<pb.first;
+        return pa.second<pb.second;
     });
 
     
