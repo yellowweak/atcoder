@@ -25,22 +25,24 @@ int main(){
     ll ans=0;
     vi A(N), B(N); cin >> A>>B;
     vector<pii> AB(N), BX(N);
-    rep(i,0,N)  AB[i] = make_pair(A[i], B[i]);
-    sort(all(AB), [](pii &pa, pii &pb){
-        if(pa.first==pb.first)  return pa.second < pb.first;
-        return pa.first<pb.first;
-    });
-    rep(i,0,N)  BX[i] = make_pair(AB[i].second, i);
-    sort(all(BX));
-    vi BB(N);
-    rep(i,0,N)  BB[i] = BX[i].first;
-    rep(i,0,N){
-        auto [a,b] = AB[i];
-        int bu = upper_bound(all(BB), b)-BB.begin();
-        for(int j=0; j<=bu; j++){
-            if(BX[j].second<=i)    ans++;
-        }
-    }
+    // official answer: segment tree
+
+    // rep(i,0,N)  AB[i] = make_pair(A[i], B[i]);
+    // sort(all(AB), [](pii &pa, pii &pb){
+    //     if(pa.first==pb.first)  return pa.second < pb.first;
+    //     return pa.first<pb.first;
+    // });
+    // rep(i,0,N)  BX[i] = make_pair(AB[i].second, i);
+    // sort(all(BX));
+    // vi BB(N);
+    // rep(i,0,N)  BB[i] = BX[i].first;
+    // rep(i,0,N){
+    //     auto [a,b] = AB[i];
+    //     int bu = upper_bound(all(BB), b)-BB.begin();
+    //     for(int j=0; j<=bu; j++){
+    //         if(BX[j].second<=i)    ans++;
+    //     }
+    // }
     cout << ans;
     return 0;
 }
