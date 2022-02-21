@@ -16,33 +16,27 @@ typedef vector<vector<ll>> grid;
 typedef pair<ll, ll> pll;
 int mod = 1000000007;
 // END LIB
-void merge(vi &va, vi &vb){
-    int ai=0, bi=0;
-    vi tmp;
-    while(ai<va.size()||bi<vb.size()){
-        if(ai==va.size()){
-            tmp.emplace_back(vb[bi++]);
-        } else if(bi==vb.size()){
-            tmp.emplace_back(va[ai++]);
-        } else if(va[ai]<vb[bi]){
-            tmp.emplace_back(va[ai++]);
-        } else {
-            tmp.emplace_back(vb[bi++]);
-        }
-    }
-    swap(va, tmp);
-}
 
 void dfs(unordered_map<int, vi> &G, vi &X, unordered_map<int, vi> &sorted_nodes, int parent, int root){
     if(G[root].size()==0){
         sorted_nodes[root].emplace_back(X[root]);
         return;
     }
-    sorted_nodes[root].emplace_back(X[root]);
+    priority_queue<int, vi, greater<int>> pq;
+    pq.emplace(X[root]);
     for(auto next:G[root])if(next!=parent){
         dfs(G,X,sorted_nodes,root,next);
-        merge(sorted_nodes[root], sorted_nodes[next]);
+        for(auto n:sorted_nodes[next]){
+            pq.emplace(n);
+            // due to the constraint of K<=20
+            if(pq.size()>20)    pq.pop();
+        }
     }
+    while(!pq.empty()){
+        sorted_nodes[root].emplace_back(pq.top());
+        pq.pop();
+    }
+    reverse(all(sorted_nodes[root]));
 }
 
 int main(){
@@ -64,8 +58,7 @@ int main(){
     rep(i,0,Q){
         int V,K; cin>>V>>K;
         V--;
-        int nth = sorted_nodes[V].size()-K;
-        cout << sorted_nodes[V][nth] << endl;
+        cout << sorted_nodes[V][K-1] << endl;
     }
     
     return 0;
