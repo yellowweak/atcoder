@@ -31,18 +31,10 @@ int main(){
         else st.push_back(make_pair(A[i],i));
     }
     int ans = INT_MAX;
-    vi f;
-    unordered_map<int,int> um;
-    for(auto [v,i]:st){
-        f.push_back(v);
-        um[v]=i;
-    }
     for(int i=K; i<N; i++){
-        if(A[i]<=f[0])    continue;
-        // int x = A[i];
+        if(A[i]<=st[0].first)    continue;
         auto it = upper_bound(all(st), make_pair(A[i]-1, INT_MAX));
         it--;
-        // int pos = it-f.begin();
         ans = min(ans, i-it->second);
     }
     cout << (ans==INT_MAX? -1:ans) << endl;
