@@ -28,12 +28,7 @@ ll dfs(int pos, int remain){
         int limit = min(M, remain-(N-pos-1));
         for(int i=limit; i>=1; i--){
             ll tmp = dfs(pos+1, remain-i);
-            if(tmp == -1){
-                break;
-            }
-            else{
-                sum = (sum + tmp)%mod;
-            }
+            sum = (sum + tmp)%mod;
         }
         dp[pos][remain] = sum;
     }
